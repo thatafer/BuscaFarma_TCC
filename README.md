@@ -15,3 +15,18 @@ Funcionalidades💡
 - Página notícias
 - Área administrativa, onde cada posto, através de um token exclusivo, pode acessar e gerenciar seu estoque de medicamentos, suas informações, publicar notícias e verificar as solicitações de reserva de medicamentos separadas por status e mudá-lo; além de poder, também, analisar os documentos enviados pelo usuário na solicitação
 - Página Sobre o Sistema e Sobre os Programadores
+
+Tecnologias utilizadas 💻
+
+Frontend: HTML, CSS, JavaScript
+Backend: Python
+Banco de dados: SQLite3
+Framework: Django
+
+Benefícios ✏️
+
+O projeto busca otimizar tempo e dinamizar o atendimento nesse serviço tão essencial à população, além de trazer mais praticidade e facilidade para o dia a dia das pessoas, se valendo da tecnologia para promover inovação!
+
+Observações ⚠️
+
+O projeto, no momento, não conta com deploy, mas fique à vontade para explorar o código e suas estruturas.
