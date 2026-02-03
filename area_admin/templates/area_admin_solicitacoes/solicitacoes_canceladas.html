@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Farma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!--<link rel="stylesheet" href="{% static 'css/estilosProgramadores.css' %}">-->
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+    }
+
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      height: 90px;
+    }
+
+    header div {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--branco);
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 14px;
+      background-color: var(--branco);
+      color: #666;
+      margin-top: 199px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    header img {
+      width: 150px;
+      height: auto;
+      margin-top: 20px;
+      margin-left: -40px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--branco);
+      padding: 30px;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: var(--azul-escuro);
+      margin-bottom: 20px;
+    }
+
+    .infos {
+      background: var(--cinza-claro);
+      padding: 20px;
+      border-radius: var(--borda-radius);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .card {
+      position: relative;
+      width: 450px;
+      height: 270px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: white;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 15px;
+      text-align: center;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+
+    a{
+      text-decoration: none;
+    }
+
+   .solicitacoes-container {
+    display: flex;
+    gap: 40px; /* espaçamento mais proporcional */
+    flex-wrap: wrap; /* permite quebra em telas menores */
+    justify-content: center; /* centraliza os cards */
+    margin-top: 40px;
+}
+
+.solicitacao {
+    position: relative;
+    width: 280px;
+    height: auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.solicitacao:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.solicitacao img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.solicitacao strong {
+    font-size: 1.1rem;
+    color: #15469b;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.solicitacao p, .solicitacao span {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.titulo-container {
+    background: #15469b;
+    padding: 20px 30px;
+    max-width: 1000px;
+    margin: 50px auto;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 40px;
+    color: var(--branco);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+  </style>
+</head>
+<body>
+<!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  
+  <header>
+    <div>
+      <img src="{% static 'images/buscafarmalogoo.png' %}">
+    </div>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'postos' %}">Postos</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      <!--{% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Sair</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}-->
+    </nav>
+  </header>
+
+<br>
+  <center> 
+  <div class="titulo-container" background-color="#15469b">
+    <h2>Solicitações Canceladas</h2>
+  </div>
+  </center>
+
+<div class="solicitacoes-container">
+  {% for reserva in reservas %}
+    <div class="solicitacao">
+      <img src="{{ reserva.medicamento.foto.url }}">
+      <br>
+      <strong>Medicamento: {{ reserva.medicamento.nome_medicamento }}</strong><br>
+      <p class="status">
+        <strong> Status: </strong>
+        {% if reserva.status == "PENDENTE" %}
+          <span style="font-weight: bold; color: #e6b800;">{{ reserva.status }}</span>
+        {% elif reserva.status == "ACEITA" %}
+          <span style="font-weight: bold; color: #2ca02c;">{{ reserva.status }}</span>
+        {% elif reserva.status == "RECUSADA" %}
+          <span style="font-weight: bold; color: #d62727;">{{ reserva.status }}</span>
+        {% elif reserva.status == "CANCELADA" %}
+          <span style="font-weight: bold; color: #d62727;">{{ reserva.status }}</span>
+        {% else %}
+          <span style="color: #555;">{{ reserva.status }}</span>
+        {% endif %}
+      </p>
+      <!--Posto: {{ reserva.posto.nome }}<br>-->
+      Usuário: {{reserva.nome}} <br>
+      Quantidade: {{ reserva.quantidade }}<br>
+      Status: {{ reserva.status }}<br>
+      Data: {{ reserva.data_solicitacao|date:"d/m/Y" }} às {{ reserva.data_solicitacao|date:"H:i" }}
+
+      <a href="{% url 'analise_documentos_dps_aceitar' reserva.id%}">
+      <button type="submit" class="reservar" style="background-color: #004aad; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 20px;">
+        Analisar documentos
+      </button>
+      </a>
+    </div>
+  {% empty %}
+    <p>Você não tem solicitações.</p>
+  {% endfor %}
+</div>
+
+<br><br><br>
+  <footer style="background-color: #a7c4e2; padding: 20px;">
+    <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+      <p style="margin: 0; font-size: 18px;">CONTATO</p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+      <div style="display: block;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+          <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+          <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Farma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!--<link rel="stylesheet" href="{% static 'css/estilosProgramadores.css' %}">-->
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+    }
+
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      height: 90px;
+    }
+
+    header div {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--branco);
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 14px;
+      background-color: var(--branco);
+      color: #666;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    header img {
+      width: 150px;
+      height: auto;
+      margin-top: 20px;
+      margin-left: -40px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--branco);
+      padding: 30px;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: var(--azul-escuro);
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      color: var(--azul-escuro);
+      margin-bottom: 20px;
+    }
+
+    .infos {
+      background: var(--cinza-claro);
+      padding: 20px;
+      border-radius: var(--borda-radius);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    a{
+      text-decoration: none;
+    }
+
+    .bg-green-50 {
+            background-color: #ecfdf5; /* verde clarinho */
+            border: 1px solid #10b981; /* borda verde */
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .text-green-700 {
+            color: #047857; /* verde escuro */
+            font-weight: 500;
+        }
+
+        .bg-red-50 {
+            background-color: #fef2f2; /* vermelho clarinho */
+            border: 1px solid #ef4444; /* borda vermelha */
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .text-red-700 {
+            color: #b91c1c; /* vermelho escuro */
+            font-weight: 500;
+        }
+  </style>
+</head>
+<body>
+<!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  
+  <header>
+    <div>
+      <img src="{% static 'images/buscafarmalogoo.png' %}">
+    </div>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'postos' %}">Postos</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      <!--{% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Sair</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}-->
+    </nav>
+  </header>
+
+<div class="container">
+    <h2>Analisar Documentos</h2>
+    Aqui, você pode analisar os documentos enviados pelo usuário. Não se esqueça de mudar o status da solicitação posteriormente a isso.
+    <br><br>
+    <div class="infos">
+      <h3>Documentos da Solicitação de {{ reserva.nome }}</h3>
+      <h3> Quantidade em estoque do medicamento solicitado: {{ reserva.medicamento.quantidade }} </h3> <br>
+      
+      {% if messages %}
+            {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+      <p><strong>RG:</strong> {{ reserva.rg }}</p>
+      <p><strong>CPF:</strong> {{ reserva.cpf }}</p>
+      <p><strong>Telefone:</strong> {{ reserva.telefone }}</p>
+      <p><strong>Número do Cartão do SUS:</strong> {{ reserva.num_cartao }}</p>
+      <br>
+      <p><strong>Receita Médica:</strong></p>
+      <a href="{{ receita }}" target="_blank">📄 Ver Receita</a>
+
+      <br><br>
+      <p><strong>Cartão SUS:</strong></p>
+      <a href="{{ cartao }}" target="_blank">💳 Ver Cartão</a>
+
+      <br><br>
+      <form method="POST">
+        {% csrf_token %}
+      <p><strong> Mensagem para o usuário:</strong></p>
+      <textarea name="mensagem" rows="4" placeholder="Escreva uma mensagem para o usuário, incluindo o prazo para retirada do medicamento se a reserva for aceita"></textarea>
+      <p><strong>Status:</strong></p>
+      
+      <select name="status" id="status">
+        {% for valor, nome in status_opcoes %}
+          {% if valor != "RETIRADA" and valor != "CANCELADA" %}
+        <option value="{{ valor }}">{{ nome }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+
+      <button type="submit" style="background-color: #004aad; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 20px;">
+        Atualizar Status
+      </button>
+      </form>
+
+    </div>
+</div>
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #b6c7e2;
+        border-radius: 7px;
+        font-size: 1rem;
+        background: #f7f9fc;
+        margin-bottom: 2px;
+        transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: #15469b;
+        outline: none;
+        background: #e3efff;
+    }
+</style>
+
+  <footer style="background-color: #a7c4e2; padding: 20px;">
+    <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+      <p style="margin: 0; font-size: 18px;">CONTATO</p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+      <div style="display: block;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+          <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+          <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
+

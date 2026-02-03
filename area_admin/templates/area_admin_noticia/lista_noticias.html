@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Área Administrativa - Notícias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-escuro: #15469b;
+            --branco: #ffffff;
+            --cinza-claro: #f7f9fc;
+            --borda-radius: 12px;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--cinza-claro); color: #444; }
+        header { background-color: var(--azul-escuro); color: var(--branco); padding: 20px 40px; display:flex; justify-content:space-between; align-items:center; }
+        header div { font-size:1.8rem; font-weight:700; }
+        nav a { color: var(--branco); margin-left: 20px; text-decoration:none; font-weight:500; }
+        nav a:hover { color:#cce0ff; }
+        .banner { background-color:#3377cc; color:white; text-align:center; padding:20px; font-weight:700; margin-top:10px; }
+        .noticia { background-color:#d3def0; max-width:800px; margin:20px auto; border-radius: var(--borda-radius); overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+        .noticia img { width:100%; height:220px; object-fit:cover; }
+        .descricao { padding:16px; }
+        .descricao h3 { margin-bottom:10px; font-size:1.2rem; font-weight:700; }
+        .descricao p { font-size:14px; margin-bottom:8px; }
+        .descricao a { color:#15469b; font-weight:bold; text-decoration:none; }
+        .descricao a:hover { text-decoration:underline; }
+        .botao-gerenciar { text-align:right; padding:10px 16px; }
+        .botao-gerenciar a { padding:8px 15px; border-radius:6px; text-decoration:none; font-weight:500; margin-left:8px; transition:background 0.3s; }
+        .adicionar { background-color:#15469b; color:white; }
+        .adicionar:hover { background-color:#0d2e6a; }
+        .editar { background-color:#ffc107; color:black; }
+        .editar:hover { background-color:#e0a800; }
+        .apagar { background-color:#ec0018ff; color:white; }
+        .apagar:hover { background-color:#c82333; }
+        footer { text-align:center; padding:30px 20px; font-size:14px; background-color:#a7c4e2; color:white; margin-top:60px; }
+    </style>
+</head>
+<body>
+    {% load static%}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Farma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+    }
+
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      height: 90px;
+    }
+
+    header div {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--branco);
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    .card {
+      background-color: var(--branco);
+      max-width: 800px;
+      margin: 30px auto;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .info-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .info-block {
+      width: 48%;
+    }
+
+    .info-block p {
+      margin-bottom: 6px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .info-block span {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .horarios {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .horario-box {
+      background-color: var(--azul-escuro);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .info-wrapper {
+        flex-direction: column;
+      }
+
+      .info-block {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 14px;
+      background-color: #a7c4e2;
+      color: white;
+      margin-top: 80px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    header img {
+      width: 150px;   
+      height: auto; 
+      margin-top: 20px; 
+      margin-left: -40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  
+  <header>
+    <div><img src="{% static 'images/buscafarmalogoo.png' %}"></div>
+    <nav>
+
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'postos' %}">Postos</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      
+      <!--{% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">Sair</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}-->
+    </nav>
+  </header>
+
+<br>
+  
+    <!-- Botão Adicionar -->
+    <div style="max-width:800px; margin:20px auto; text-align:right;">
+        <a href="{% url 'adicionar_noticia' %}" class="adicionar" style ="background-color: #15469b; color: white; padding: 10px 20px; 
+      border-radius: 8px; text-decoration: none; font-weight: 600;
+      transition: background 0.3s;
+  " onmouseover="this.style.backgroundColor='#0d2e6a'" onmouseout="this.style.backgroundColor='#15469b'">
+  + Adicionar Notícia</a>
+    </div>
+
+    <!-- Loop de notícias -->
+    {% for noticia in noticias %}
+    <div class="noticia">
+        {% if noticia.imagem %}
+            <img src="{{ noticia.imagem.url }}" alt="{{ noticia.titulo }}">
+        {% endif %}
+        <div class="descricao">
+            <h3>{{ noticia.titulo }}</h3>
+            <p>{{ noticia.conteudo }}</p>
+            <p><em>{{ noticia.data_publicacao }}</em></p>
+            
+
+
+            <div class="botao-gerenciar">
+                <a href="{% url 'editar_noticia' noticia.id %}" class="editar"style="
+      background-color: #ffc107; color: black; padding: 8px 15px; 
+      border-radius: 6px; text-decoration: none; font-weight: 500;
+      transition: background 0.3s;
+  " onmouseover="this.style.backgroundColor='#e0a800'" onmouseout="this.style.backgroundColor='#ffc107'">
+    ✏️ Editar
+  </a>
+    <a href="{% url 'apagar_noticia' noticia.id %}" class="apagar"style="
+      background-color: #ec0018ff; color: white; padding: 8px 15px; 
+      border-radius: 6px; text-decoration: none; font-weight: 500;
+      transition: background 0.3s;
+  " onmouseover="this.style.backgroundColor='#c82333'" onmouseout="this.style.backgroundColor='#dc3545'">
+    🗑️ Apagar
+  </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Rodapé -->
+<footer style="background-color: #a7c4e2; padding: 20px;">
+        <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+            <p style="margin: 0; font-size: 18px;"> <b> CONTATO </b> </p>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+            <div style="display: block;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+                    <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+                    <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+                </div>
+            </div>
+            <div>
+                <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,322 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Farma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+    }
+
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      height: 90px;
+    }
+
+    header div {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--branco);
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    .card {
+      background-color: var(--branco);
+      max-width: 800px;
+      margin: 30px auto;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .info-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .info-block {
+      width: 48%;
+    }
+
+    .info-block p {
+      margin-bottom: 6px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .info-block span {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .horarios {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .horario-box {
+      background-color: var(--azul-escuro);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .info-wrapper {
+        flex-direction: column;
+      }
+
+      .info-block {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 14px;
+      background-color: #a7c4e2;
+      color: white;
+      margin-top: 80px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    .horarios-titulo{
+      display: block;
+      margin-bottom: 12px;
+    }
+    header img {
+      width: 150px;   
+      height: auto; 
+      margin-top: 20px; 
+      margin-left: -40px;
+    }
+
+    .banner {
+            background-color: #3377cc;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: relative;
+            font-style: bold;
+        }
+    
+    #map{
+      height: 400px;
+      width: 80%;
+      margin: 20px auto;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  
+  <header>
+    <div><img src="{% static 'images/buscafarmalogoo.png' %}"></div>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      <a href="{% url 'area_admin' %}">Área Administrativa</a>
+      
+      {% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">Sair</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+    </nav>
+  </header>
+  
+  <div class="banner">
+    ENCONTRE INFORMAÇÕES ÚTEIS SOBRE OS POSTOS DE SAÚDE DA CIDADE
+  </div>
+
+  <br>
+  <div style="width: 80%; margin: 30px auto 0 auto; background: var(--azul-claro); border-radius: var(--borda-radius); box-shadow: 0 2px 8px rgba(21,70,155,0.08); padding: 18px 24px; text-align: center;">
+    <b>Utilize o mapa abaixo para localizar os postos de saúde na cidade de Paulínia. Clique nos marcadores para ver o nome de cada posto. <br>
+    Logo abaixo na página, você encontrará informações detalhadas sobre cada um deles </b>
+  </div>
+
+  <!-- Teste de mapa setando os postos-->
+
+  <div id = "map"> </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+  <script>
+    const map = L.map('map').setView([-22.770685607598875, -47.146050148509126], 15); // Coordenadas iniciais e nível de zoom
+    const layer = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+      maxZoom: 30,
+    });
+
+    layer.addTo(map);
+
+    const marker = L.marker([-22.770685607598875, -47.146050148509126]).addTo(map)
+      .bindPopup('UBS Centro II')
+      .openPopup();
+
+    const marker2 = L.marker([-22.71590894901808, -47.17385929102552]).addTo(map)
+      .bindPopup('UBS São José')
+      .openPopup();
+
+    const marker3 = L.marker([-22.76973591044275, -47.172829322784175]).addTo(map)
+      .bindPopup('UBS Monte Alegre')
+      .openPopup();
+
+    const marker4 = L.marker([-22.77796639959347, -47.187248878163054]).addTo(map)
+      .bindPopup('UBS Coperlotes')
+      .openPopup();
+  </script>
+
+  <br> <br> 
+  <div style="width: 800px; margin: 30px auto 0 auto; background: var(--azul-claro); border-radius: var(--borda-radius); box-shadow: 0 2px 8px rgba(21,70,155,0.08); padding: 18px 24px; text-align: center;">
+    <b> Informações </b>
+  </div>
+  <!-- Cards de Postos -->
+   
+  {% for posto in postos %}
+  <div class="card">
+    <img src="{{ posto.imagem.url }}" alt="{{ posto.nome }}">
+   
+      <strong> &nbsp; Nome do posto: </strong> {{posto.nome}} 
+      <br><br>
+      <div class="info-wrapper">
+        <div class="info-block">
+          <span>📍 ENDEREÇO</span>
+          <p><b> &nbsp; Rua/número: </b>{{ posto.endereco }}</p>
+          <p><b> &nbsp; Bairro: </b>{{ posto.bairro }}</p>
+          <p><b> &nbsp; CEP:</b> {{ posto.cep }}</p>
+          <!-- <p><em>Clique na imagem para ver rotas</em></p> -->
+        </div>
+        <div class="info-block">
+          <span>📞 TELEFONES</span>
+          <p><b>Telefone 1: </b>{{ posto.telefone1 }}</p>
+          <p><b>Telefone 2: </b>{{ posto.telefone2 }}</p>
+        </div>
+      </div>
+      <div>
+        <strong class="horarios-titulo"> &nbsp; HORÁRIO DE FUNCIONAMENTO:</strong> 
+        
+        <div class="horarios">
+          <div class="horario-box">SEG À SEX:<br>{{ posto.horario_semana }}</div>
+          <div class="horario-box">SÁBADO:<br>{{ posto.horario_sabado }}</div>
+          <div class="horario-box">DOMINGO:<br>{{ posto.horario_domingo }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Rodapé -->
+  <footer style="background-color: #a7c4e2; padding: 20px;">
+    <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+      <p style="margin: 0; font-size: 18px;"><b>CONTATO</b></p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+      <div style="display: block;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+          <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+          <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+
+

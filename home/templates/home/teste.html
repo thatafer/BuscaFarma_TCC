@@ -1,0 +1,609 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Busca Farma - UBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/estilosHome.css' %}">
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+      --amarelo-destaque: #FFD700;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header img {
+      width: 160px;
+      height: auto;
+    }
+
+    nav a {
+      color: var(--branco);
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--amarelo-destaque);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "images/ubs-bg.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--branco);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .cta-button {
+      background-color: var(--amarelo-destaque);
+      color: var(--cinza-texto);
+      padding: 12px 30px;
+      border-radius: var(--borda-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+    }
+
+    .hero .cta-button:hover {
+      background-color: #FFC107;
+    }
+
+    /* Search Container */
+    .search-container {
+      margin: 40px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .search-box {
+      background-color: var(--branco);
+      padding: 20px;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+
+    .search-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-button-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .search-wrapper input {
+      flex-grow: 1;
+      padding: 12px 15px;
+      border: 2px solid #D0D7E6;
+      border-radius: var(--borda-radius);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .search-wrapper input:focus {
+      border-color: var(--azul-escuro);
+    }
+
+    .search-wrapper .select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-wrapper select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #D0D7E6;
+      border-radius: var(--borda-radius);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cinza-texto);
+      background-color: var(--branco);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      transition: border-color 0.3s;
+    }
+
+    .search-wrapper .select-wrapper::after {
+      content: "▼";
+      font-size: 1.2rem;
+      color: var(--azul-escuro);
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-wrapper select:hover,
+    .search-wrapper select:focus {
+      border-color: var(--azul-escuro);
+    }
+
+    .search-box button {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--borda-radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .search-box button:hover {
+      background-color: #123c85;
+    }
+
+    /* Resultado Container */
+    .resultado-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .card-remedio {
+      background-color: var(--branco);
+      padding: 20px;
+      border-radius: var(--borda-radius);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 300px;
+      width: 100%;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card-remedio:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-remedio img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .sem-foto {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #E0E0E0;
+      color: #666;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    .med-info {
+      text-align: left;
+    }
+
+    .med-nome {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--azul-escuro);
+      margin-bottom: 10px;
+    }
+
+    .med-postos {
+      font-size: 0.95rem;
+      color: var(--cinza-texto);
+      margin-bottom: 15px;
+    }
+
+    .card-remedio button {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--borda-radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .card-remedio button:hover {
+      background-color: #123c85;
+    }
+
+    /* Como Funciona Section */
+    .como-funciona {
+      background-color: var(--azul-claro);
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .como-funciona h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      margin-bottom: 40px;
+    }
+
+    .passos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .passo {
+      max-width: 220px;
+      text-align: center;
+    }
+
+    .passo img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+
+    .passo h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--cinza-texto);
+      margin-bottom: 10px;
+    }
+
+    .passo p {
+      font-size: 0.95rem;
+      color: var(--cinza-texto);
+    }
+
+    /* Depoimentos Section */
+    .depoimentos {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: var(--branco);
+    }
+
+    .depoimentos h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      margin-bottom: 40px;
+    }
+
+    .depoimentos-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .depoimento {
+      max-width: 300px;
+      padding: 20px;
+      background-color: var(--cinza-claro);
+      border-radius: var(--borda-radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .depoimento p {
+      font-size: 0.95rem;
+      color: var(--cinza-texto);
+      margin-bottom: 15px;
+    }
+
+    .depoimento span {
+      font-weight: 600;
+      color: var(--azul-escuro);
+    }
+
+    /* Parceiros Section */
+    .parceiros {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .parceiros h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      margin-bottom: 40px;
+    }
+
+    .parceiros-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .parceiros-container img {
+      width: 120px;
+      height: auto;
+      filter: grayscale(100%);
+      transition: filter 0.3s;
+    }
+
+    .parceiros-container img:hover {
+      filter: grayscale(0);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer p {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    footer img {
+      width: 100px;
+      margin-top: 10px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .search-container {
+        max-width: 90%;
+      }
+
+      .input-button-wrapper {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .search-wrapper input,
+      .search-box button {
+        width: 100%;
+      }
+
+      .passos {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .passo {
+        max-width: 90%;
+      }
+
+      .resultado-container {
+        padding: 20px;
+        gap: 15px;
+      }
+
+      .card-remedio {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Intérprete de Libras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <header>
+    <div><img src="{% static 'images/buscafarmalogoo.png' %}" alt="Busca Farma"></div>
+    <nav>
+      <a href="{% url 'postos' %}">Postos</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      <a href="{% url 'area_admin' %}">Área Administrativa</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Sair</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Medicamentos Gratuitos nas UBS</h1>
+    <p>Encontre e reserve medicamentos disponíveis nas Unidades Básicas de Saúde próximas a você!</p>
+    <a href="#search" class="cta-button">Buscar Agora</a>
+  </section>
+
+  <!-- Search Section -->
+  <section id="search" class="search-container">
+    <form id="search-form" class="search-box" action="{% url 'home' %}" method="POST">
+      {% csrf_token %}
+      <div class="search-wrapper">
+        <div class="input-button-wrapper">
+          <input type="text" name="medicamento" placeholder="Digite o nome do medicamento..." aria-label="Buscar medicamento">
+          <button type="submit">Buscar</button>
+        </div>
+        <div class="select-wrapper">
+          <select name="posto" id="posto" aria-label="Filtrar por UBS">
+            <option value="">Filtrar por UBS</option>
+            {% for posto in postos %}
+              <option value="{{ posto.id }}" {% if posto_id == posto.id|stringformat:"s" %}selected{% endif %}>
+                {{ posto.nome }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- Como Funciona Section -->
+  <section class="como-funciona">
+    <h2>Como Funciona?</h2>
+    <div class="passos">
+      <div class="passo">
+        <img src="{% static 'images/search-icon.png' %}" alt="Pesquisar">
+        <h3>1. Pesquise o Medicamento</h3>
+        <p>Insira o nome do medicamento que você precisa no campo de busca.</p>
+      </div>
+      <div class="passo">
+        <img src="{% static 'images/ubs-icon.png' %}" alt="Selecionar UBS">
+        <h3>2. Escolha a UBS</h3>
+        <p>Selecione a Unidade Básica de Saúde mais próxima de você.</p>
+      </div>
+      <div class="passo">
+        <img src="{% static 'images/reserve-icon.png' %}" alt="Reservar">
+        <h3>3. Reserve Online</h3>
+        <p>Faça a reserva do medicamento de forma rápida e prática.</p>
+      </div>
+      <div class="passo">
+        <img src="{% static 'images/pickup-icon.png' %}" alt="Retirar">
+        <h3>4. Retire na UBS</h3>
+        <p>Compareça à UBS escolhida para retirar seu medicamento gratuito.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resultado Medicamentos -->
+  {% if not pesquisa %}
+    <h2 style="text-align: center; color: var(--azul-escuro); font-weight: 900; font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+      MEDICAMENTOS DISPONÍVEIS NAS UBS
+    </h2>
+    <p style="text-align: center; color: var(--azul-escuro); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 30px;">
+      DISPONÍVEIS ESTA SEMANA
+    </p>
+  {% endif %}
+  <section class="resultado-container">
+    {% for medicamento in medicamentos %}
+      <div class="card-remedio">
+        {% if medicamento.foto %}
+          <img src="{{ medicamento.foto.url }}" alt="{{ medicamento.nome }}">
+        {% else %}
+          <div class="sem-foto">Sem foto</div>
+        {% endif %}
+        <div class="med-info">
+          <div class="med-nome">Nome: {{ medicamento.nome }}</div>
+          <div class="med-postos">
+            UBS com este medicamento:
+            {% for posto in medicamento.postos_disponiveis.all %}
+              {{ posto.nome }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+              Nenhuma UBS disponível
+            {% endfor %}
+          </div>
+          <form action="{% url 'reserva' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="reservar">Reservar</button>
+          </form>
+        </div>
+      </div>
+    {% empty %}
+      <p>Nenhum medicamento encontrado.</p>
+    {% endfor %}
+  </section>
+
+  <!-- Depoimentos Section -->
+  <section class="depoimentos">
+    <h2>O Que Dizem os Usuários das UBS?</h2>
+    <div class="depoimentos-container">
+      <div class="depoimento">
+        <p>"Consegui reservar meu remédio na UBS do bairro em minutos. Muito prático!"</p>
+        <span>Carla S.</span>
+      </div>
+      <div class="depoimento">
+        <p>"O Busca Farma facilitou minha vida. Encontro os medicamentos que preciso na UBS rapidamente."</p>
+        <span>João P.</span>
+      </div>
+      <div class="depoimento">
+        <p>"Adoro usar o app para reservar meus remédios. Economizo tempo e é tudo gratuito!"</p>
+        <span>Mariana T.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parceiros Section -->
+  <section class="parceiros">
+    <h2>Nossos Parceiros</h2>
+    <div class="parceiros-container">
+      <img src="{% static 'images/ubs-partner1.png' %}" alt="Parceiro 1">
+      <img src="{% static 'images/ubs-partner2.png' %}" alt="Parceiro 2">
+      <img src="{% static 'images/ubs-partner3.png' %}" alt="Parceiro 3">
+      <img src="{% static 'images/ubs-partner4.png' %}" alt="Parceiro 4">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Contato: buscafarmaa@gmail.com | (19) 99690-1099 | (19) 99901-9446</p>
+    <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma">
+  </footer>
+</body>
+</html>

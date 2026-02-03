@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Farma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!--<link rel="stylesheet" href="{% static 'css/estilosProgramadores.css' %}">-->
+  <style>
+    :root {
+      --azul-escuro: #15469b;
+      --azul-claro: #e3efff;
+      --branco: #ffffff;
+      --cinza-claro: #f7f9fc;
+      --cinza-texto: #444;
+      --borda-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cinza-claro);
+      color: var(--cinza-texto);
+    }
+
+    header {
+      background-color: var(--azul-escuro);
+      color: var(--branco);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      height: 90px;
+    }
+
+    header div {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--branco);
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce0ff;
+    }
+
+    .container-descricoes {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 40px;
+    }
+
+    .card {
+      background-color: var(--branco);
+      border-radius: var(--borda-radius);
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: justify;
+    }
+
+    .foto-perfil {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 14px;
+      background-color: var(--branco);
+      color: #666;
+      margin-top: 70px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+
+    .about-container {
+    background: #15469b;
+    padding: 20px 30px;
+    max-width: 1000px;
+    margin: 50px auto;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 60px;
+    color: var(--branco);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.remy-img {
+    width: 150px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+header img {
+  width: 150px;   
+  height: auto; 
+  margin-top: 20px; 
+  margin-left: -40px;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <header>
+    <div><img src="{% static 'images/buscafarmalogoo.png' %}"></div>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'postos' %}">Postos</a>
+      <a href="{% url 'noticias' %}">Notícias</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+      <a href="{% url 'area_admin' %}">Área Administrativa</a> 
+      {% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">Sair</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+    </nav>
+  </header>
+
+  <br><br>
+  <center> 
+  <div class="about-container" background-color="#15469b">
+    <h1>Sobre Nós</h1>
+  </div>
+  </center>
+  <div class="container-descricoes">
+    <div class="card">
+      <img src="{% static 'images/thalita.jpg' %}" class="foto-perfil">
+      <p>
+        <strong>Thalita</strong> – Olá, prazer! Meu nome é Thalita.
+        Sou uma entusiasta do mundo da tecnologia da informação e acredito fortemente no seu potencial de mudar vidas. No momento, sei programar em Java, Python, C#, C++, 
+        PHP e SQL, além de saber fazer páginas web utilizando HTML e CSS. Sou uma pessoa empenhada, que gosta de aprender novas coisas e trabalhar em projetos relacionados à programação, além de ser disposta em ajudar, ser ajudada e trabalhar em equipe. Sou palmeirense, 
+        gosto de música, toco violão, amo a praia, faço trabalho voluntário semanalmente e prezo muito pelos meus valores e princípios.
+
+        <br><br>
+        <center>
+        <img src="{% static 'images/linkedin.png' %}" alt="LinkedIn" width="30px" style="vertical-align: middle;">
+        <a href="https://www.linkedin.com/in/thalita-moyses-9b82342b0" target="_blank">
+          Meu Linkedin
+        </a>
+        <br><br>
+        <img src="{% static 'images/doc.png' %}" width="25px" style="vertical-align: middle;">
+        <a href="{% static 'outros/curriculoThalita.pdf'%}">
+          Meu currículo
+        </a>
+        </center>
+      </p>
+    </div>
+
+    <div class="card">
+      <img src="{% static 'images/jhenyfer.jpg' %}" alt="Jhenyfer" class="foto-perfil">
+      <p>
+        <strong>Jhenyfer</strong> – Olá, prazer! Meu nome é Jhenyfer.
+        Tenho curso avançado em Python e participei do curso da Samsung de aplicação de Inteligência Artificial; também tenho curso de inglês. Além disso, sei programar em Java, C#, C++, 
+        PHP e SQL, além de construir sites utilizando HTML e CSS. Gosto de aprender coisas novas, trabalhar em equipe e investir em novos desafios, 
+        buscando e propondo soluções para eles. Sou palmeirense, gosto de animais, filmes, séries, música e esportes em geral, 
+        e fiz parte da organização do projeto solidário DOE, no CEMEP.
+
+        <br><br>
+        <center>
+        <img src="{% static 'images/linkedin.png' %}" alt="LinkedIn" width="30px" style="vertical-align: middle;">
+        <a href="https://www.linkedin.com/in/jhenyfer-souza-bbb6ba318/" target="_blank">
+          Meu Linkedin
+        </a>
+        <br><br>
+        <img src="{% static 'images/doc.png' %}" width="25px" style="vertical-align: middle;">
+        <a href="{% static 'outros/curriculoJheny.pdf'%}">
+          Meu currículo
+        </a>
+        </center>
+      </p>
+    </div>
+  </div>
+
+  <footer style="background-color: #a7c4e2; padding: 20px;">
+    <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+      <p style="margin: 0; font-size: 18px;"> <b> CONTATO </b> </p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+      <div style="display: block;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+          <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+          <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+

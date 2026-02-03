@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if medicamento %}Editar{% else %}Adicionar{% endif %} Medicamento - Busca Farma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-escuro: #15469b;
+            --azul-claro: #e3efff;
+            --branco: #ffffff;
+            --cinza-claro: #f7f9fc;
+            --cinza-texto: #444;
+            --borda-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--azul-escuro);
+            color: var(--branco);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            height: 90px;
+        }
+
+        header div {
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        header nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        header nav a:hover {
+            color: #a7c4e2;
+        }
+
+        h2 {
+            color: #15469b;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 25px;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: inline-block;
+            margin-right: 15px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item input {
+            margin-right: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #15469b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0d2f6c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+            background-color: var(--branco);
+            color: #666;
+            margin-top: 100px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        header img {
+            width: 150px;   
+            height: auto; 
+            margin-top: 20px; 
+            margin-left: -40px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Intérprete de Libras (Script do GOV BR)-->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  
+<!-- Cabeçalho -->
+<header>
+    <div><img src="{% static 'images/buscafarmalogoo.png' %}"></div>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'postos' %}">Postos</a>
+        <a href="{% url 'noticias' %}">Notícias</a>
+        <a href="{% url 'sobre' %}">Sobre</a>
+        
+        <!--{% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Sair</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}-->
+    </nav>
+</header>
+
+<br>
+
+<h2>{% if medicamento %}Editar{% else %}Adicionar{% endif %} Medicamento</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Nome:</label>
+    <input type="text" name="nome_medicamento" value="{{ medicamento.nome_medicamento|default:'' }}" placeholder="Digite o nome do medicamento">
+
+    <label>Quantidade:</label>
+    <input type="number" name="quantidade" value="{{ medicamento.quantidade|default:0 }}" min="0" placeholder="Digite a quantidade">
+
+    <label>Foto:</label>
+    <input type="file" name="foto">
+
+    <!--<label>Postos disponíveis:</label>
+    <div class="checkbox-group">
+        {% for posto in postos %}
+            <div class="checkbox-item">
+                <input type="checkbox" name="postos" value="{{ posto.id }}"
+                {% if medicamento and posto in medicamento.postos_disponiveis.all %}checked{% endif %}>
+                {{ posto.nome }}
+            </div>
+        {% endfor %}
+    </div>-->
+
+    <button type="submit">Salvar</button>
+</form>
+
+<!-- Rodapé -->
+<footer style="background-color: #a7c4e2; padding: 20px;">
+        <div style="text-align: center; color: white; font-weight: 500; margin-bottom: 15px;">
+            <p style="margin: 0; font-size: 18px;"> <b> CONTATO </b> </p>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+            <div style="display: block;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="email" width="25px">
+                    <span style="color: white; font-weight: bold;">buscafarmaa@gmail.com</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="telefone" width="25px">
+                    <span style="color: white; font-weight: bold;">(19) 99690-1099 / (19) 99901-9446</span>
+                </div>
+            </div>
+            <div>
+                <img src="{% static 'images/logoAzul.png' %}" alt="Busca Farma" width="120px">
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
