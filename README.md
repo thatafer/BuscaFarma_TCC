@@ -1,4 +1,4 @@
-Olá, seja muito bem vindo (a) ao BuscaFarma, um projeto de Trabalho de Conclusão de Curso do Ensino Técnico, desenvolvido juntamente com minha dupla.
+Olá, seja muito bem vindo (a) ao BuscaFarma, um projeto de Trabalho de Conclusão de Curso do Ensino Técnico, desenvolvido juntamente com minha dupla, Jhenyfer Souza.
 
 O que é? 🤔
 
