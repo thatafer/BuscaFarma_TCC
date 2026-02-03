@@ -18,9 +18,9 @@ Funcionalidades💡
 
 Tecnologias utilizadas 💻
 
-Frontend: HTML, CSS, JavaScript
-Backend: Python
-Banco de dados: SQLite3
+Frontend: HTML, CSS, JavaScript /
+Backend: Python /
+Banco de dados: SQLite3 /
 Framework: Django
 
 Benefícios ✏️
